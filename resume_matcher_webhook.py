@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify  # type: ignore
 from dotenv import load_dotenv
 import os
-from resume_matcher_corrected import match_resume_to_jobs  # make sure this
+from resume_matcher_corrected import match_resume_to_jobs  # Ensure this file exists
 
 load_dotenv()  # Load environment variables from .env
 openai_api_key = os.getenv("OPENAI_API_KEY")
@@ -26,4 +26,4 @@ def match_resume():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)  # Enable debug for error details
