@@ -1,8 +1,7 @@
 services:
   - type: web
-    name: my-webhook-app
+    name: resume-matcher-api
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "waitress-serve --port=$PORT resume_matcher_webhook:app"
+    startCommand: "gunicorn app:app"
     plan: free
-    autoDeploy: true

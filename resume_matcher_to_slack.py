@@ -2,14 +2,14 @@ import json
 import requests
 
 # Load parsed resume data
-with open("parsed_resume_sample.json", "r", encoding="utf-8") as f:
+with open("parsed_resume_sample.json", "r", encoding='utf-8') as f:
     resume_data = json.load(f)
 
 # Dummy job matches (simulate Pinecone output)
 jobs = [
     {
         "job_title": "AI Engineer",
-        "company": "TechNova",
+        "company": "TechNova", 
         "location": "Berlin",
         "requirements": ["Python", "GPT", "NLP"],
         "score": 0.92
@@ -17,7 +17,7 @@ jobs = [
     {
         "job_title": "Machine Learning Analyst",
         "company": "DataVision",
-        "location": "Munich",
+        "location": "Munich", 
         "requirements": ["Pandas", "NumPy", "TensorFlow"],
         "score": 0.88
     }
@@ -30,18 +30,11 @@ for job in jobs:
         "type": "section",
         "text": {
             "type": "mrkdwn",
-            "text": f"*New Resume Match for:*\n*{job['job_title']}* at *{job['company']}*\n📍 Location: {job['location']}\n📋 Requirements: {', '.join(job['requirements'])}\n⭐ Score: {job['score']:.2f}"
+            "text": f"*New Resume Match for:* {job['job_title']} at *{job['company']}* 📍 Location: {job['location']} 🔍 Requirements: {', '.join(job['requirements'])}"
         }
     })
     blocks.append({"type": "divider"})
 
-# Send message to Slack
-response = requests.post(
-    "https://hooks.slack.com/services/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",
-    json={
-        "text": "New Resume Matches Found",
-        "blocks": blocks
-    }
-)
-
-print("✅ Sent to Slack:", response.status_code, response.text)
+# You can integrate with Slack webhook here
+print("Slack message prepared:")
+print(json.dumps(blocks, indent=2))

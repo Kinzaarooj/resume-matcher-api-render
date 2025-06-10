@@ -1,14 +1,11 @@
-import openai
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
 def match_resume_to_jobs(data):
-    # Example implementation
     try:
-        # Replace with your actual logic
-        return {"status": "success", "data": data}
+        return {
+            "data": data,
+            "match_score": 0.85
+        }
     except Exception as e:
-        return {"status": "error", "message": str(e)}
+        return {
+            "status": "error",
+            "message": str(e)
+        }
