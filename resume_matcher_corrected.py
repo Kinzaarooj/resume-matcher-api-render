@@ -1,4 +1,3 @@
-
 import openai
 from dotenv import load_dotenv
 import os
@@ -13,5 +12,3 @@ def match_resume_to_jobs(data):
         return {"status": "success", "data": data}
     except Exception as e:
         return {"status": "error", "message": str(e)}
-
-# No self-import needed
