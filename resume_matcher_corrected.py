@@ -9,6 +9,7 @@ load_dotenv()
 # Initialize OpenAI (if used by match_resume_to_jobs)
 import openai
 openai.api_key = os.getenv("OPENAI_API_KEY")
+print(f"OpenAI API Key: {openai.api_key}")  # Add this line for debugging
 
 app = Flask(__name__)
 
