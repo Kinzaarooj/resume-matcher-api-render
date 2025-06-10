@@ -1,32 +1,18 @@
-import json
-import openai # type: ignore
+from flask import Flask, request, jsonify # type: ignore
 import os
-from pinecone import Pinecone  # type: ignore # ✅ Correct new SDK import
+from resume_matcher_corrected import match_resume_to_jobs  # Make sure this file/function exists
 
-# Load API keys from environment
-openai.api_key = os.getenv("OPENAI_API_KEY")
-pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"), environment="us-west1-gcp")
+app = Flask(__name__)
 
-# Connect to the correct Pinecone index
-index = pc.Index("job-matching-index")
+@app.route("/webhook", methods=["POST"])
+def webhook():
+    try:
+        resume_json = request.get_json()
+        result = match_resume_to_jobs(resume_json)
+        return jsonify({"status": "success", "matches": result}), 200
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
-# Define function to match resume to jobs
-def match_resume_to_jobs(resume_json):
-    # Convert structured JSON resume into a string
-    resume_text = json.dumps(resume_json)
-
-    # Get embedding from OpenAI
-    response = openai.Embedding.create(
-        input=resume_text,
-        model="text-embedding-ada-002"
-    )
-    resume_vector = response['data'][0]['embedding']
-
-    # Query Pinecone for best job matches
-    query_response = index.query(
-        vector=resume_vector,
-        top_k=5,
-        include_metadata=True
-    )
-
-    return query_response
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Use dynamic port from Render
+    app.run(host="0.0.0.0", port=port)
