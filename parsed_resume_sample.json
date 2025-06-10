@@ -1,0 +1,10 @@
+{
+  "name": "Lena Müller",
+  "email": "lena.mueller@email.de",
+  "phone": "+49 1522 1234567",
+  "location": "Berlin, Germany",
+  "skills": ["Python", "Machine Learning", "TensorFlow", "Data Analysis"],
+  "experience": "3 years as Data Scientist at SAP",
+  "education": "M.Sc. in Data Science, TU Berlin",
+  "certifications": ["AWS Certified Machine Learning", "TensorFlow Developer Certificate"]
+}
