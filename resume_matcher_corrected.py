@@ -1,6 +1,14 @@
-from flask import Flask, request, jsonify # type: ignore
+from flask import Flask, request, jsonify  # type: ignore
+from resume_matcher_jobs import match_resume_to_jobs
+from dotenv import load_dotenv
 import os
-from resume_matcher_corrected import match_resume_to_jobs  # Make sure this file/function exists
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize OpenAI (if used by match_resume_to_jobs)
+import openai
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 
