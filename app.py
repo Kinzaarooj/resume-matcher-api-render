@@ -3,21 +3,21 @@ from dotenv import load_dotenv
 import os
 from resume_matcher_corrected import match_resume_to_jobs
 
-# Load environment variables from .env
+# ✅ Load environment variables
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
     raise ValueError("OPENAI_API_KEY not found in environment!")
 
-# Initialize Flask app
+# ✅ Initialize Flask app
 app = Flask(__name__)
 
-# ✅ HEALTH CHECK ROUTE (REQUIRED BY RENDER)
+# ✅ Health check route for Render (GET /)
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({"status": "OK", "message": "Webhook is live"}), 200
 
-# ✅ MAIN WEBHOOK ENDPOINT
+# ✅ Webhook route to handle POST resume JSON
 @app.route("/webhook", methods=["POST"])
 def webhook():
     try:
@@ -27,7 +27,7 @@ def webhook():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
-# ✅ ENTRY POINT FOR GUNICORN ON RENDER
+# ✅ Entry point for Render using Gunicorn (dynamic port)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
